@@ -1,4 +1,4 @@
-package com.radio;
+package com.radio.core;
 
 /**
  * Created by Jek on 03.08.16.
