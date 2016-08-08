@@ -1,17 +1,17 @@
 **REST API**
    
-    /createStream
-    
+/createStream
+   
 Example http://127.0.0.1:8080/createStream?musicList=/Users/Jek/Music/iTunes/iTunesMedia/Music/RHCP
     
-    If attribute musicList = null, else play list path from config.properties. key = MEDIA_DIR 
+If attribute musicList = null, else play list path from config.properties. key = MEDIA_DIR 
     
-    /stopStream
-    /pauseStream
-    /playStream
-    /playNext
-    /playPrevious
-    /getStatus
+/stopStream
+/pauseStream
+/playStream
+/playNext
+/playPrevious
+/getStatus
     
 **File config.properties**
 
