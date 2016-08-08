@@ -1,11 +1,14 @@
 package com.radio.core;
 
+import com.radio.config.Config;
 import com.radio.impl.RadioConstants;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import sun.text.resources.no.CollationData_no;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.medialist.MediaList;
@@ -28,6 +31,9 @@ import java.util.List;
 @Component
 public class PlayList
 {
+    @Autowired
+    private Config config;
+
     private Logger log = LoggerFactory.getLogger(PlayList.class);
 
     private MediaPlayerFactory factory;
@@ -36,11 +42,10 @@ public class PlayList
 
     private MediaList playList;
 
+    private String status;
+
     public PlayList() {
-        NativeLibrary.addSearchPath(
-                RuntimeUtil.getLibVlcLibraryName(), "/Applications/VLC.app/Contents/MacOS/lib"
-        );
-        Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+
         initPlayList();
     }
 
@@ -89,22 +94,45 @@ public class PlayList
         // Wait forever...
 //        Thread.currentThread().join();
         System.out.println("Thread Id = "+String.valueOf(Thread.currentThread().getId()));
-
+        setStatus("play");
     }
 
     public void stop()
     {
         mediaListPlayer.stop();
+        setStatus("stop");
     }
 
     public void pause()
     {
         mediaListPlayer.pause();
+        setStatus("pause");
     }
 
     public void play()
     {
         mediaListPlayer.play();
+        setStatus("play");
+    }
+
+    public void playNext()
+    {
+        mediaListPlayer.playNext();
+    }
+
+    public void playPrevious()
+    {
+        mediaListPlayer.playPrevious();
+    }
+
+    public String getStatus()
+    {
+        return status;
+    }
+
+    private void setStatus(String status)
+    {
+        this.status = status;
     }
 
     /**

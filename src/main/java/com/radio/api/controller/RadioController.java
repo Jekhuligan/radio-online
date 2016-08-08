@@ -1,5 +1,6 @@
 package com.radio.api.controller;
 
+import com.radio.config.Config;
 import com.radio.core.PlayList;
 import com.radio.core.RadioCore;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class RadioController
 {
 
     @Autowired
-    private RadioCore radioCore;
+    private Config config;
 
     @Autowired
     private PlayList playList;
@@ -25,8 +26,12 @@ public class RadioController
     public String createStream(@RequestParam String musicList)
     {
 
+        if (musicList== null)
+        {
+            musicList = config.getMediaDir();
+        }
         try {
-            playList.start(musicList,"10.0.0.121",5555);
+            playList.start(musicList,config.getAddres(), Integer.parseInt(config.getPort()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,6 +57,26 @@ public class RadioController
     {
         playList.play();
         return "Stream play";
+    }
+
+    @RequestMapping("/playNext")
+    public String playNext()
+    {
+        playList.playNext();
+        return "Stream play";
+    }
+
+    @RequestMapping("/playPrevious")
+    public String playPrevious()
+    {
+        playList.playPrevious();
+        return "Stream play";
+    }
+
+    @RequestMapping("/getStatus")
+    public String getStatus()
+    {
+        return playList.getStatus();
     }
 
 
