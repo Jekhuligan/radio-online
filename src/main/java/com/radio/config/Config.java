@@ -25,7 +25,7 @@ public class Config
     {
         try
         {
-            props.load(new FileInputStream(new File("src/main/resources/config.properties")));
+            props.load(new FileInputStream(new File("config.properties")));
         } catch (IOException e) {
             e.printStackTrace();
         }
